@@ -1,0 +1,33 @@
+C:\Users\JX\Desktop\Szakdoga console\Szakdoga console\bin\Debug\netcoreapp3.0\Szakdoga console.exe
+C:\Users\JX\Desktop\Szakdoga console\Szakdoga console\bin\Debug\netcoreapp3.0\Szakdoga console.deps.json
+C:\Users\JX\Desktop\Szakdoga console\Szakdoga console\bin\Debug\netcoreapp3.0\Szakdoga console.runtimeconfig.json
+C:\Users\JX\Desktop\Szakdoga console\Szakdoga console\bin\Debug\netcoreapp3.0\Szakdoga console.runtimeconfig.dev.json
+C:\Users\JX\Desktop\Szakdoga console\Szakdoga console\bin\Debug\netcoreapp3.0\Szakdoga console.dll
+C:\Users\JX\Desktop\Szakdoga console\Szakdoga console\bin\Debug\netcoreapp3.0\Szakdoga console.pdb
+C:\Users\JX\Desktop\Szakdoga console\Szakdoga console\obj\Debug\netcoreapp3.0\Szakdoga console.csprojAssemblyReference.cache
+C:\Users\JX\Desktop\Szakdoga console\Szakdoga console\obj\Debug\netcoreapp3.0\Szakdoga console.AssemblyInfoInputs.cache
+C:\Users\JX\Desktop\Szakdoga console\Szakdoga console\obj\Debug\netcoreapp3.0\Szakdoga console.AssemblyInfo.cs
+C:\Users\JX\Desktop\Szakdoga console\Szakdoga console\obj\Debug\netcoreapp3.0\Szakdoga console.dll
+C:\Users\JX\Desktop\Szakdoga console\Szakdoga console\obj\Debug\netcoreapp3.0\Szakdoga console.pdb
+C:\Users\JX\Desktop\szakdoga-master\Szakdoga console\Szakdoga console\bin\Debug\netcoreapp3.0\Szakdoga console.exe
+C:\Users\JX\Desktop\szakdoga-master\Szakdoga console\Szakdoga console\bin\Debug\netcoreapp3.0\Szakdoga console.deps.json
+C:\Users\JX\Desktop\szakdoga-master\Szakdoga console\Szakdoga console\bin\Debug\netcoreapp3.0\Szakdoga console.runtimeconfig.json
+C:\Users\JX\Desktop\szakdoga-master\Szakdoga console\Szakdoga console\bin\Debug\netcoreapp3.0\Szakdoga console.runtimeconfig.dev.json
+C:\Users\JX\Desktop\szakdoga-master\Szakdoga console\Szakdoga console\bin\Debug\netcoreapp3.0\Szakdoga console.dll
+C:\Users\JX\Desktop\szakdoga-master\Szakdoga console\Szakdoga console\bin\Debug\netcoreapp3.0\Szakdoga console.pdb
+C:\Users\JX\Desktop\szakdoga-master\Szakdoga console\Szakdoga console\obj\Debug\netcoreapp3.0\Szakdoga console.csprojAssemblyReference.cache
+C:\Users\JX\Desktop\szakdoga-master\Szakdoga console\Szakdoga console\obj\Debug\netcoreapp3.0\Szakdoga console.AssemblyInfoInputs.cache
+C:\Users\JX\Desktop\szakdoga-master\Szakdoga console\Szakdoga console\obj\Debug\netcoreapp3.0\Szakdoga console.AssemblyInfo.cs
+C:\Users\JX\Desktop\szakdoga-master\Szakdoga console\Szakdoga console\obj\Debug\netcoreapp3.0\Szakdoga console.dll
+C:\Users\JX\Desktop\szakdoga-master\Szakdoga console\Szakdoga console\obj\Debug\netcoreapp3.0\Szakdoga console.pdb
+C:\Users\JX\Desktop\Szakdoga console\bin\Debug\netcoreapp3.0\Szakdoga console.exe
+C:\Users\JX\Desktop\Szakdoga console\bin\Debug\netcoreapp3.0\Szakdoga console.deps.json
+C:\Users\JX\Desktop\Szakdoga console\bin\Debug\netcoreapp3.0\Szakdoga console.runtimeconfig.json
+C:\Users\JX\Desktop\Szakdoga console\bin\Debug\netcoreapp3.0\Szakdoga console.runtimeconfig.dev.json
+C:\Users\JX\Desktop\Szakdoga console\bin\Debug\netcoreapp3.0\Szakdoga console.dll
+C:\Users\JX\Desktop\Szakdoga console\bin\Debug\netcoreapp3.0\Szakdoga console.pdb
+C:\Users\JX\Desktop\Szakdoga console\obj\Debug\netcoreapp3.0\Szakdoga console.csprojAssemblyReference.cache
+C:\Users\JX\Desktop\Szakdoga console\obj\Debug\netcoreapp3.0\Szakdoga console.AssemblyInfoInputs.cache
+C:\Users\JX\Desktop\Szakdoga console\obj\Debug\netcoreapp3.0\Szakdoga console.AssemblyInfo.cs
+C:\Users\JX\Desktop\Szakdoga console\obj\Debug\netcoreapp3.0\Szakdoga console.dll
+C:\Users\JX\Desktop\Szakdoga console\obj\Debug\netcoreapp3.0\Szakdoga console.pdb
