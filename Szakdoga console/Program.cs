@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+//03.18. babu levels
 namespace Szakdoga_console
 {
     class Program
@@ -10,6 +10,7 @@ namespace Szakdoga_console
         public readonly int SWORDSMAN = 1;
         public readonly int ARCHER = 2;
         public readonly int ASSASIN = 3;
+        public readonly int BASE = 4;
 
         public static readonly string KEK = "kek";
         public static readonly string PIROS = "piros";
@@ -18,53 +19,74 @@ namespace Szakdoga_console
         public static readonly int NEMLEHETIDELEPNI = 1;
         public static readonly int LEHETIDELEPNI = 2;
         public static readonly int LEHETIDEUTNI = 3;
+        public static readonly int LEHETIDELETREHOZNI = 4;
 
-        public string kinekakore = KEK;
+        public static readonly int SEMMIAKCIOVAL = 1;
+        public static readonly int KIJELOLESUTAN = 2;
+        public static readonly int LETREHOZASNAL = 3;
+
+        public string Kinekakore = KEK;
+
+        public int Kekmana = 2;
+        public int Pirosmana = 0;
 
         public int Kijeloltsor = 0;
         public int Kijeloltoszlop = 0;
-
         public int Hovasor = 2;
         public int Hovaoszlop = 2;
+
+        public bool Csinalhatevalamit = false;
+        public bool Vegeajateknak = false;
 
         static void Main(string[] args)
         {
             var program = new Program();
 
-            program.Urespalyafeltoltes();
-            while (true)
+            program.Kiindulopalyafeltoltes();
+            while (program.Vegeajateknak == false)
             {
-                program.Palyakirajzolas(false);
+                program.Palyakirajzolas(SEMMIAKCIOVAL);
                 program.Mitcsinalhatsz();
             }
+            program.Jatekvege();
         }
-        void Urespalyafeltoltes()
+        void Kiindulopalyafeltoltes()
         {
             for (int i = 0; i < 64; i++)
             {
-                Palya.Add(new Mezo(URESMEZO, URES, NEMLEHETIDELEPNI, 0, 0));
+                Palya.Add(new Mezo(URESMEZO, URES, NEMLEHETIDELEPNI, 0, 0, 0, 0, 0));
             }
+            Babuhozzaad(0 * 8 + 0, BASE, KEK, NEMLEHETIDELEPNI, 0, 0, 0, 0, 0);
+            Babuhozzaad(7 * 8 + 7, BASE, PIROS, NEMLEHETIDELEPNI, 0, 0, 0, 0, 0);
+
+
         }
-        void Babuhozzaad(int hova, int mit, string tulajdonos, int ide, int energia, int range)
+        void Babuhozzaad(int hova, int mit, string tulajdonos, int ide, int energia, int range,int damage, int defense, int level)
         {
                 Palya[hova].tipus = mit;
                 Palya[hova].tulajdonos = tulajdonos;
                 Palya[hova].ide = ide;
                 Palya[hova].energia = energia;
                 Palya[hova].range = range;
+                Palya[hova].damage = damage;
+                Palya[hova].defense = defense;
+                Palya[hova].level = level;
         }
-        void Palyakirajzolas(bool kijelolesutan)
+        void Palyakirajzolas(int mikor)
         {
             Console.Clear();
-            if (kinekakore == PIROS)
+            if (Kinekakore == PIROS)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("{0} köre van", Kinekakore);
+                Console.WriteLine("{0} mana áll rendelkezésre", Pirosmana);
             }
             else
             {
                 Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine("{0} köre van", Kinekakore);
+                Console.WriteLine("{0} mana áll rendelkezésre", Kekmana);
             }
-            Console.WriteLine("{0} köre van", kinekakore);
             Console.WriteLine();
 
             for (int sor = 0; sor < 8; sor++)
@@ -75,9 +97,13 @@ namespace Szakdoga_console
                     Szinbeallitas(jelenlegimezo.tulajdonos);
 
                     Console.Write(" ");
-                    if (kijelolesutan == true)
+                    if (mikor == 2)
                     {
-                        Kijeloleshatter(sor, oszlop);
+                        Kijeloleshatter(sor, oszlop, KIJELOLESUTAN);
+                    }
+                    if (mikor == 3)
+                    {
+                        Kijeloleshatter(sor, oszlop, LEHETIDELETREHOZNI);
                     }
 
                     Console.Write(jelenlegimezo.tipus);
@@ -101,9 +127,9 @@ namespace Szakdoga_console
                 Console.ForegroundColor = ConsoleColor.Blue;
             }
         }
-        void Kijeloleshatter(int sor, int oszlop)
+        void Kijeloleshatter(int sor, int oszlop, int mikor)
         {
-            if (Kijeloltoszlop == oszlop && Kijeloltsor == sor)
+            if (Kijeloltoszlop == oszlop && Kijeloltsor == sor && mikor == KIJELOLESUTAN)
             {
                 Console.BackgroundColor = ConsoleColor.White;
             }
@@ -111,13 +137,20 @@ namespace Szakdoga_console
             {
                 Console.BackgroundColor = ConsoleColor.DarkYellow;
             }
-            else if (Palya[sor * 8 + oszlop].ide == LEHETIDEUTNI)
+            else if (Palya[sor * 8 + oszlop].ide == LEHETIDEUTNI && mikor == KIJELOLESUTAN)
             {
                 Console.BackgroundColor = ConsoleColor.DarkRed;
             }
             else
             {
                 Console.BackgroundColor = ConsoleColor.Black;
+            }
+            if (mikor == LEHETIDELETREHOZNI)
+            {
+                if (Palya[sor * 8 + oszlop].ide == LEHETIDELETREHOZNI)
+                {
+                    Console.BackgroundColor = ConsoleColor.White;
+                }
             }
 
         }
@@ -132,15 +165,17 @@ namespace Szakdoga_console
             string bekert = Console.ReadLine();
             if (bekert == "1")
             {
-                Palyakirajzolas(false);
+                Palyakirajzolas(1);
                 Babukijeloles();
                 Hovalephetuthet();
-                Palyakirajzolas(true);
+                Palyakirajzolas(2);
                 Babumitcsinaljon();
 
             }
             else if (bekert == "2") 
             {
+                Hovahozhatjaletre();
+                Palyakirajzolas(3);
                 Babuletrehoz();
             }
             else if (bekert == "3")
@@ -148,18 +183,39 @@ namespace Szakdoga_console
                 Korvege();
                 
             }
+            Vegeeajateknak();
 
         }
-        void Babuletrehoz() 
+        void Babuletrehoz()
         {
             int hovaraksor;
             int hovarakoszlop;
-            Kiirasszinchange();
-            Console.WriteLine();
-            Console.WriteLine("Milyen tipusú bábut?");
-            Console.WriteLine("1: Swordsman    2: Archer    3: Assasin");
 
-            string bekert = Console.ReadLine();
+
+            Kiirasszinchange();
+
+            Console.WriteLine();
+            Console.WriteLine("Milyen tipusú bábut hozzon létre?");
+            Console.WriteLine("1: Swordsman    2: Archer    3: Assasin");
+            string milyentipus = Console.ReadLine();
+
+            Console.WriteLine();
+            Console.WriteLine("Milyen szintű bábut hozzon létre? ");
+            Console.WriteLine("1: 1 mana    2: 3 mana    3: 9 mana");
+            int milyenszint = Convert.ToInt32(Console.ReadLine());
+            int szuksegesmana;
+            if(milyenszint == 1) 
+            {
+                szuksegesmana = 1;
+            }
+            else if (milyenszint == 2) 
+            {
+                szuksegesmana = 3;
+            }
+            else
+            {
+                szuksegesmana = 9;
+            }
 
             Console.WriteLine();
             Console.WriteLine("Hova rakja ki");
@@ -168,18 +224,91 @@ namespace Szakdoga_console
             Console.Write("     oszlop: ");
             hovarakoszlop = Convert.ToInt32(Console.ReadLine()) - 1;
 
-            if (bekert == "1" && Palya[hovaraksor * 8 + hovarakoszlop].tulajdonos == URES)
+            int mostanimana = Kekmana;
+            if (Kinekakore == PIROS)
             {
-                Babuhozzaad(hovaraksor * 8 + hovarakoszlop, SWORDSMAN, kinekakore, NEMLEHETIDELEPNI, 0, 1);
+                mostanimana = Pirosmana;
             }
-            else if (bekert == "2" && Palya[hovaraksor * 8 + hovarakoszlop].tulajdonos == URES)
+
+            if (Palya[hovaraksor * 8 + hovarakoszlop].tulajdonos == URES && Palya[hovaraksor * 8 + hovarakoszlop].ide == LEHETIDELETREHOZNI && mostanimana >= szuksegesmana)
             {
-                Babuhozzaad(hovaraksor * 8 + hovarakoszlop, ARCHER, kinekakore, NEMLEHETIDELEPNI, 0, 2);
+                if (milyenszint == 1 || milyenszint == 2 || milyenszint == 3)
+                {
+                    if (milyentipus == "1")
+                    {
+                        Babuhozzaad(hovaraksor * 8 + hovarakoszlop, SWORDSMAN, Kinekakore, NEMLEHETIDELEPNI, 0, 1, milyenszint+2, milyenszint+1, milyenszint);
+                        mostanimana = mostanimana - szuksegesmana;
+                        if (Kinekakore == PIROS)
+                        {
+                            Pirosmana = mostanimana;
+                        }
+                        else
+                        {
+                            Kekmana = mostanimana;
+                        }
+                    }
+                    else if (milyentipus == "2")
+                    {
+                        Babuhozzaad(hovaraksor * 8 + hovarakoszlop, ARCHER, Kinekakore, NEMLEHETIDELEPNI, 0, 2, milyenszint+2, milyenszint, milyenszint);
+                        mostanimana = mostanimana - szuksegesmana;
+                        if (Kinekakore == PIROS)
+                        {
+                            Pirosmana = mostanimana;
+                        }
+                        else
+                        {
+                            Kekmana = mostanimana;
+                        }
+                    }
+                    else if (milyentipus == "3")
+                    {
+                        Babuhozzaad(hovaraksor * 8 + hovarakoszlop, ASSASIN, Kinekakore, NEMLEHETIDELEPNI, 0, 1, milyenszint+2, milyenszint, milyenszint);
+                        mostanimana = mostanimana - szuksegesmana;
+                        if (Kinekakore == PIROS)
+                        {
+                            Pirosmana = mostanimana;
+                        }
+                        else
+                        {
+                            Kekmana = mostanimana;
+                        }
+                    }
+                }
             }
-            else if (bekert == "3" && Palya[hovaraksor * 8 + hovarakoszlop].tulajdonos == URES)
+        }
+        void Hovahozhatjaletre() 
+        {
+            int holabazisomsor = 0;
+            int holabazisomoszlop = 0;
+            for (int sor = 0; sor < 8; sor++)
             {
-                Babuhozzaad(hovaraksor * 8 + hovarakoszlop, ASSASIN, kinekakore, NEMLEHETIDELEPNI, 0, 1);
+                for (int oszlop = 0; oszlop < 8; oszlop++)
+                {
+                    if (Palya[sor * 8 + oszlop].tulajdonos == Kinekakore && Palya[sor * 8 + oszlop].tipus == BASE)
+                    {
+                        holabazisomsor = sor;
+                        holabazisomoszlop = oszlop;
+                    }
+                }
             }
+            for (int sor = 0; sor < 8; sor++)
+            {
+                for (int oszlop = 0; oszlop < 8; oszlop++)
+                {
+                    if (sor - holabazisomsor == 0 || sor - holabazisomsor == 1 || sor - holabazisomsor == -1)
+                    {
+                        if (oszlop - holabazisomoszlop == 0 || oszlop - holabazisomoszlop == 1 || oszlop - holabazisomoszlop == -1)
+                        {
+                            if (Palya[sor * 8 + oszlop].tulajdonos == URES)
+                            {
+                                Palya[sor * 8 + oszlop].ide = LEHETIDELETREHOZNI;
+                            }
+                            
+                        }
+                    }
+                }
+            }
+            
         }
         void Babukijeloles()
         {
@@ -193,6 +322,7 @@ namespace Szakdoga_console
             Console.Write("     oszlop: ");
             kijeloltoszlop = Convert.ToInt32(Console.ReadLine()) - 1;
 
+            if (Palya[kijeloltsor * 8 + kijeloltoszlop].tulajdonos == Kinekakore)
             {
                 Kijeloltsor = kijeloltsor;
                 Kijeloltoszlop = kijeloltoszlop;
@@ -213,13 +343,16 @@ namespace Szakdoga_console
                         {
 
                             Palya[sor * 8 + oszlop].ide = LEHETIDELEPNI;
+                            Csinalhatevalamit = true;
                         }
                         else if (Palya[Kijeloltsor * 8 + Kijeloltoszlop].energia != 0 &&
-                            Palya[sor * 8 + oszlop].tulajdonos != kinekakore &&
+                            Palya[sor * 8 + oszlop].tulajdonos != Kinekakore &&
                             Palya[sor * 8 + oszlop].tulajdonos != URES &&
-                            Palya[Kijeloltsor * 8 + Kijeloltoszlop].range >= tavolsagutesre)
+                            Palya[Kijeloltsor * 8 + Kijeloltoszlop].range >= tavolsagutesre &&
+                            Palya[Kijeloltsor * 8 + Kijeloltoszlop].damage > Palya[sor * 8 + oszlop].defense)
                         {
                             Palya[sor * 8 + oszlop].ide = LEHETIDEUTNI;
+                            Csinalhatevalamit = true;
                         }
                     }
                 }
@@ -227,11 +360,17 @@ namespace Szakdoga_console
         }
         int Tavolsagutesre(int sor, int oszlop)
         {
-            int tavolsag = 0;
+            int tavolsag = 20;
             for (int i = 1; i < 8; i++)
             {
-                if (Math.Abs(Kijeloltoszlop - oszlop) >= i && Kijeloltsor == sor) { tavolsag = i; }
-                if (Math.Abs(Kijeloltsor - sor) >= i && Kijeloltoszlop == oszlop) { tavolsag = i; }
+                if (Math.Abs(Kijeloltoszlop - oszlop) >= i && Kijeloltsor == sor) 
+                { 
+                    tavolsag = i;
+                }
+                if (Math.Abs(Kijeloltsor - sor) >= i && Kijeloltoszlop == oszlop) 
+                {
+                    tavolsag = i;
+                }
             }
             return tavolsag;
         }
@@ -268,19 +407,22 @@ namespace Szakdoga_console
             if (Palya[Kijeloltsor * 8 + Kijeloltoszlop].tulajdonos != URES)
             {
                 Kiirasszinchange();
-
-                Console.WriteLine();
-                Console.WriteLine("1: ütés");
-                Console.WriteLine("2: lépés");
-
-                string mitcsinaljon = Console.ReadLine();
-                if (mitcsinaljon == "1")
+                if (Csinalhatevalamit == true)
                 {
-                    Utesbekeres();
-                }
-                else if (mitcsinaljon == "2")
-                {
-                    Lepesbekeres();
+
+                    Console.WriteLine();
+                    Console.WriteLine("1: ütés");
+                    Console.WriteLine("2: lépés");
+
+                    string mitcsinaljon = Console.ReadLine();
+                    if (mitcsinaljon == "1")
+                    {
+                        Utesbekeres();
+                    }
+                    else if (mitcsinaljon == "2")
+                    {
+                        Lepesbekeres();
+                    }
                 }
             }
         }
@@ -288,7 +430,7 @@ namespace Szakdoga_console
         {
 
             Kiirasszinchange();
-            if (Palya[Kijeloltsor * 8 + Kijeloltoszlop].tulajdonos == kinekakore)
+            if (Palya[Kijeloltsor * 8 + Kijeloltoszlop].tulajdonos == Kinekakore)
             {
                 Console.WriteLine();
 
@@ -322,13 +464,14 @@ namespace Szakdoga_console
                     Palya[sor * 8 + oszlop].ide = NEMLEHETIDELEPNI;
                 }
             }
+            Csinalhatevalamit = false;
         }
         void Lepesbekeres()
         {
             if (Palya[Kijeloltsor * 8 + Kijeloltoszlop].tulajdonos != URES)
             {
                 Kiirasszinchange();
-                if (Palya[Kijeloltsor * 8 + Kijeloltoszlop].tulajdonos == kinekakore)
+                if (Palya[Kijeloltsor * 8 + Kijeloltoszlop].tulajdonos == Kinekakore)
                 {
                     Console.WriteLine();
                     Console.WriteLine("Lépés");
@@ -350,12 +493,18 @@ namespace Szakdoga_console
                 Palya[Hovasor * 8 + Hovaoszlop].tipus = Palya[Kijeloltsor * 8 + Kijeloltoszlop].tipus;
                 Palya[Hovasor * 8 + Hovaoszlop].energia = Palya[Kijeloltsor * 8 + Kijeloltoszlop].energia - tavolsag;
                 Palya[Hovasor * 8 + Hovaoszlop].range = Palya[Kijeloltsor * 8 + Kijeloltoszlop].range;
+                Palya[Hovasor * 8 + Hovaoszlop].damage = Palya[Kijeloltsor * 8 + Kijeloltoszlop].damage;
+                Palya[Hovasor * 8 + Hovaoszlop].defense = Palya[Kijeloltsor * 8 + Kijeloltoszlop].defense;
+                Palya[Hovasor * 8 + Hovaoszlop].level = Palya[Kijeloltsor * 8 + Kijeloltoszlop].level;
 
 
                 Palya[Kijeloltsor * 8 + Kijeloltoszlop].tulajdonos = URES;
                 Palya[Kijeloltsor * 8 + Kijeloltoszlop].tipus = URESMEZO;
                 Palya[Kijeloltsor * 8 + Kijeloltoszlop].energia = 0;
                 Palya[Kijeloltsor * 8 + Kijeloltoszlop].range = 0;
+                Palya[Kijeloltsor * 8 + Kijeloltoszlop].damage = 0;
+                Palya[Kijeloltsor * 8 + Kijeloltoszlop].defense = 0;
+                Palya[Kijeloltsor * 8 + Kijeloltoszlop].level = 0;
 
 
             }
@@ -366,10 +515,11 @@ namespace Szakdoga_console
                     Palya[sor * 8 + oszlop].ide = NEMLEHETIDELEPNI;
                 }
             }
+            Csinalhatevalamit = false;
         }
         void Kiirasszinchange()
         {
-            if (kinekakore == PIROS)
+            if (Kinekakore == PIROS)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
             }
@@ -380,13 +530,15 @@ namespace Szakdoga_console
         }
         void Korvege()
         {
-            if (kinekakore == PIROS)
+            if (Kinekakore == PIROS)
             {
-                kinekakore = KEK;
+                Kinekakore = KEK;
+                Kekmana = Kekmana + 2;
             }
             else
             {
-                kinekakore = PIROS;
+                Kinekakore = PIROS;
+                Pirosmana = Pirosmana + 2;
             }
             for (int sor = 0; sor < 8; sor++)
             {
@@ -400,12 +552,41 @@ namespace Szakdoga_console
                         }
                         else if (Palya[sor * 8 + oszlop].tipus == ASSASIN)
                         {
-                            Palya[sor * 8 + oszlop].energia = 2;
+                            Palya[sor * 8 + oszlop].energia = 3;
                         }
+                        
+                    }
+                    if (Palya[sor * 8 + oszlop].tulajdonos == URES)
+                    {
+                        Palya[sor * 8 + oszlop].ide = NEMLEHETIDELEPNI;
                     }
                 }
             }
-
+        }
+        void Vegeeajateknak() 
+        {
+            int bazisokszama = 0;
+            for (int sor = 0; sor < 8; sor++)
+            {
+                for (int oszlop = 0; oszlop < 8; oszlop++)
+                {
+                    if (Palya[sor * 8 + oszlop].tipus == BASE)
+                    {
+                        bazisokszama++;
+                    }
+                }
+            }
+            if (bazisokszama < 2)
+            {
+                Vegeajateknak = true;
+            }
+        }
+        void Jatekvege() 
+        {
+            Console.Clear();
+            Console.WriteLine();
+            Console.WriteLine("a {0} játékos nyert!", Kinekakore);
+            Console.ReadKey();
         }
     }
 }
